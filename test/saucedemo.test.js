@@ -2,12 +2,15 @@ require('chromedriver');
 
 const { Builder, By, until } = require('selenium-webdriver');
 const assert = require('assert');
+const fs = require('fs');
 
 describe('SauceDemo Automation Test - Advance Part 1', function () {
     let driver;
     this.timeout(60000);
 
-    // 🔹 Login SEKALI saja
+    // =========================
+    // BEFORE: setup & login ONCE
+    // =========================
     before(async function () {
         driver = await new Builder()
             .forBrowser('chrome')
@@ -30,11 +33,16 @@ describe('SauceDemo Automation Test - Advance Part 1', function () {
         );
     });
 
-    // 🔹 Setup ringan sebelum tiap test
+    // =================================
+    // BEFORE EACH: reset halaman inventory
+    // =================================
     beforeEach(async function () {
         await driver.get('https://www.saucedemo.com/inventory.html');
     });
 
+    // =========================
+    // TEST CASE 1
+    // =========================
     it('Sukses Login ke SauceDemo', async function () {
         const title = await driver.getTitle();
         assert.strictEqual(title, 'Swag Labs');
@@ -45,6 +53,9 @@ describe('SauceDemo Automation Test - Advance Part 1', function () {
         assert.ok(cart);
     });
 
+    // =========================
+    // TEST CASE 2
+    // =========================
     it('Urutkan Produk dari A ke Z', async function () {
         const dropdown = await driver.findElement(
             By.css('[data-test="product-sort-container"]')
@@ -65,6 +76,27 @@ describe('SauceDemo Automation Test - Advance Part 1', function () {
         assert.deepStrictEqual(names, sortedNames);
     });
 
+    // =================================
+    // AFTER EACH: screenshot jika FAIL
+    // =================================
+    afterEach(async function () {
+        if (this.currentTest.state === 'failed') {
+            if (!fs.existsSync('screenshots')) {
+                fs.mkdirSync('screenshots');
+            }
+
+            const image = await driver.takeScreenshot();
+            fs.writeFileSync(
+                `screenshots/${this.currentTest.title}.png`,
+                image,
+                'base64'
+            );
+        }
+    });
+
+    // =========================
+    // AFTER: close browser
+    // =========================
     after(async function () {
         if (driver) {
             await driver.quit();

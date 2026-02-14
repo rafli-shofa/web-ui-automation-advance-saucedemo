@@ -1,7 +1,7 @@
 {
-  "name": "sesi-10-_-web-ui-automation-advance",
+  "name": "cls",
   "version": "1.0.0",
-  "description": "",
+  "description": "Project Web UI Automation menggunakan Selenium WebDriver, Mocha, dan JavaScript. Project ini dibuat untuk memenuhi Tugas Sesi 10 - Web UI Automation Advance Part 1.",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -22,5 +22,13 @@
     "mochawesome": "^7.1.4",
     "mochawesome-merge": "^5.1.1",
     "mochawesome-report-generator": "^6.3.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rafli-shofa/web-ui-automation-advance-saucedemo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rafli-shofa/web-ui-automation-advance-saucedemo/issues"
+  },
+  "homepage": "https://github.com/rafli-shofa/web-ui-automation-advance-saucedemo#readme"
 }
